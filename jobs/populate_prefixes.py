@@ -3,7 +3,7 @@ from nautobot.ipam.models import Prefix, Namespace
 
 
 class PopulatePrefix(Job):
-    """ Job to populate synthetic IPv4 Prefixes for testing in Nautobot"""
+    """Job to populate synthetic IPv4 Prefixes for testing in Nautobot"""
 
     class Meta:
         name = "Populate IPv4 Prefixes"
@@ -11,7 +11,7 @@ class PopulatePrefix(Job):
         has_sensitive_variables = False
 
     def run(self):
-        """ Execute Job to create Prefixes """
+        """Execute Job to create Prefixes"""
 
         prefixes_to_add = ["172.16.0.0/20", "172.17.0.0/20", "172.18.0.0/20"]
 
@@ -38,7 +38,9 @@ class PopulatePrefix(Job):
             if created:
                 self.logger.info(f"Created prefix: {prefix.prefix}")
             else:
-                self.logger.warning(f"Prefix already exists: {Prefix.prefix}")
+                self.logger.warning(f"Prefix already exists: {prefix.prefix}")
+
+        self.logger.info("Prefix population completed!")
 
 
 register_jobs(PopulatePrefix)
