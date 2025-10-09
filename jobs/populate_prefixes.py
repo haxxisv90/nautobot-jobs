@@ -32,8 +32,8 @@ class PopulatePrefix(Job):
             prefix, created = Prefix.objects.get_or_create(
                 prefix=new_prefix,
                 namespace=namespace,
+                status=active_status,
                 defaults={
-                    "status": active_status,
                     "description": "Added via populate prefix job"
                 }
             )
