@@ -1,5 +1,6 @@
 from nautobot.apps.jobs import Job, register_jobs
 from nautobot.ipam.models import Prefix, Namespace
+from nautobot.extras.models import Status
 
 
 class PopulatePrefix(Job):
@@ -25,12 +26,14 @@ class PopulatePrefix(Job):
         if created:
             self.logger.info(f"Created namespace: {namespace.name}")
 
+        active_status = Status.objects.get(name="Active")
+
         for new_prefix in prefixes_to_add:
             prefix, created = Prefix.objects.get_or_create(
                 prefix=new_prefix,
                 namespace=namespace,
                 defaults={
-                    "status": "active",
+                    "status": active_status,
                     "description": "Added via populate prefix job"
                 }
             )
