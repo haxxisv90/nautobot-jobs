@@ -1,10 +1,16 @@
-from nautobot.apps.jobs import Job, register_jobs
+from nautobot.apps.jobs import Job, register_jobs, IPNetworkVar
 from nautobot.ipam.models import Prefix, Namespace
 from nautobot.extras.models import Status
 
 
 class PopulatePrefix(Job):
     """Job to populate synthetic IPv4 Prefixes for testing in Nautobot"""
+
+    target = IPNetworkVar(
+        description="Enter the target IP network (e.g., 10.0.0.0/24)",
+        min_prefix_length=8,
+        max_prefix_length=32
+    )
 
     class Meta:
         name = "Populate IPv4 Prefixes"
@@ -14,7 +20,7 @@ class PopulatePrefix(Job):
     def run(self):
         """Execute Job to create Prefixes"""
 
-        prefixes_to_add = ["172.16.0.0/20", "172.17.0.0/20", "172.18.0.0/20"]
+        prefixes_to_add = ["172.19.0.0/20", "172.20.0.0/20", "172.21.0.0/20"]
 
         namespace, created = Namespace.objects.get_or_create(
             name="Engineering",
