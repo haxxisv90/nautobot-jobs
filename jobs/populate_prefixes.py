@@ -17,10 +17,10 @@ class PopulatePrefix(Job):
         description = "Populate synthetic IPv4 prefixes for testing"
         has_sensitive_variables = False
 
-    def run(self):
+    def run(self, target):
         """Execute Job to create Prefixes"""
 
-        prefixes_to_add = ["172.19.0.0/20", "172.20.0.0/20", "172.21.0.0/20"]
+        prefixes_to_add = ["172.19.0.0/20", "172.20.0.0/20", "172.21.0.0/20", target]
 
         namespace, created = Namespace.objects.get_or_create(
             name="Engineering",
